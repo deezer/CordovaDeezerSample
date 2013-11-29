@@ -149,7 +149,7 @@
 					var id = args[id_name];
 
 					var data_event = {
-						tracks : response.arg,
+						tracks : response.arg.data,
 						type : method,
 						id : id,
 						index : args.index

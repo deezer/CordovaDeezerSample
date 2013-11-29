@@ -1,50 +1,199 @@
+
 <!DOCTYPE html>
-<!--
-    Licensed to the Apache Software Foundation (ASF) under one
-    or more contributor license agreements.  See the NOTICE file
-    distributed with this work for additional information
-    regarding copyright ownership.  The ASF licenses this file
-    to you under the Apache License, Version 2.0 (the
-    "License"); you may not use this file except in compliance
-    with the License.  You may obtain a copy of the License at
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Bootstrap, from Twitter</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta name="description" content="">
+	<meta name="author" content="">
 
-    http://www.apache.org/licenses/LICENSE-2.0
+	<script type="text/javascript" src="js/jquery.js"></script>
+	<script type="text/javascript" src="js/json.js"></script>
 
-    Unless required by applicable law or agreed to in writing,
-    software distributed under the License is distributed on an
-    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
-     KIND, either express or implied.  See the License for the
-    specific language governing permissions and limitations
-    under the License.
--->
-<html>
-    <head>
-        <meta charset="utf-8" />
-        <meta name="format-detection" content="telephone=no" />
-        <!-- WARNING: for iOS 7, remove the width=device-width and height=device-height attributes. See https://issues.apache.org/jira/browse/CB-4323 -->
-        <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
-        <title>PhoneGap Deezer project</title>
+	<!-- Le styles -->
+	<link href="css/bootstrap.css" rel="stylesheet">
+	<link href="css/bootstrap_responsive.css" rel="stylesheet">
+
+	<style>
+	body {
+		padding-top: 60px; /* 60px to make the container go all the way to the bottom of the topbar */
+		/*background-color:gray;*/
+
+		/*padding-bottom:220px;*/
+	}
+
+	#consolelog {
+		display:none;
+		position:fixed;
+		bottom:0px;
+		left:0px;
+		padding:0;margin:0 0 0 0;
+		width:100%;
+		line-height:20 px;font-size:9px;
+		border-radius:0px;
+		height:200px;
+		overflow: auto;
+		border:0px solid black;
+		border-top:1px solid black;
+		background-color:#fff;
+		z-index:10000;
+	}
+
+	@media (max-width: 979px) {
+		body {
+			padding-top: 0px; /* 60px to make the container go all the way to the bottom of the topbar */
+			/*background-color:gray;*/
+		}
+	}
+
+	</style>
 
 
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/deezer-cordova.js"></script>
-        <script type="text/javascript" src="js/dz.js"></script>
-        <script type="text/javascript" src="js/dz-phonegap.js"></script>
-        <script type="text/javascript" src="js/app.js"></script>
-    </head>
-    <body>
-        <div id="dz-root"></div>
 
-        <input type="button" onclick="app.login()" value="login"/>
+	<script type="text/javascript" src="cordova.js"></script>
+	<script type="text/javascript" src="js/deezer-cordova.js"></script>
+	<script type="text/javascript" src="js/dz.js"></script>
+	<script type="text/javascript" src="js/dz-phonegap.js"></script>
 
-        <div id="result"></div>
+	<script src="js/bootstrap.js"></script>
 
-        <script type="text/javascript">
-            app.initialize();
-        </script>
+</head>
+
+<body>
+	<pre id="consolelog"></pre>
+	<div id="dz-root"></div>
+
+	<style type="text/css">
+	.progressbarplay {
+		cursor:pointer;overflow: hidden;height: 8px;margin-bottom: 8px;background-color: #F7F7F7;background-image: -moz-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: -ms-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: -webkit-gradient(linear,0 0,0 100%,from(whiteSmoke),to(#F9F9F9));background-image: -webkit-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: -o-linear-gradient(top,whiteSmoke,#F9F9F9);background-image: linear-gradient(top,whiteSmoke,#F9F9F9);background-repeat: repeat-x;filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f5f5f5',endColorstr='#f9f9f9',GradientType=0);-webkit-box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);-moz-box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);-webkit-border-radius: 6px;-moz-border-radius: 6px;border-radius: 6px;
+	}
+	.progressbarplay .bar {
+		cursor:pointer;background: #4496C6;width: 0;height: 8px;color: white;font-size: 12px;text-align: center;text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);-webkit-box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);-moz-box-shadow: inset 0 -1px 0 rgba(0,0,0,0.15);box-shadow: inset 0 -1px 0 rgba(0, 0, 0, 0.15);-webkit-box-sizing: border-box;-moz-box-sizing: border-box;box-sizing: border-box;-webkit-transition: width .6s ease;-moz-transition: width .6s ease;-ms-transition: width .6s ease;-o-transition: width .6s ease;transition: width .6s ease;
+	}
+	</style>
 
 
 
-    </body>
-</html>
+	<script src="js/player_demo.js"></script>
+
+
+	<div class="container-fluid">
+		<div class="row-fluid">
+			<div class="span12">
+
+				<h1>Deezer Cordova - Player Object</h1>
+
+				<p>
+					The player object let you interact with the Deezer player.<br/>
+					You can play tracks, albums, playlists,<br/>
+					You can do actions as 'next', 'prev', 'play', 'pause'<br/>
+					You can also set the volume and set options such as 'suffle' or 'repeat'.<br/>
+					<br/>
+					Below is a demo of an own made player that interact with the deezer player
+				</p>
+
+
+				<div id="controlers">
+					Album ID : <input type="text" id="album_id_input"/><input type="button" value="Play" onclick="playAlbum($('#album_id_input').val());return false;" class="btn"/>
+					<br/>
+
+					Different ways to load and/or play an album/playlist/track list :<br/>
+					<input value="Play Daft Punk - Discovery, and log tracklist" onclick="playAlbum(302127); return false;" class="btn btn-inverse" type="button"/><br/>
+					DZ.player.playAlbum(302127, function(data){ console.log(data.tracks) });<br/>
+					<input value="Play Daft Punk - Homework, and log tracklist" onclick="playAlbum(301775); return false;" class="btn btn-inverse" type="button"/><br/>
+					DZ.player.playAlbum(301775, function(data){ console.log(data.tracks) });<br/>
+					<input value="Load (autoplay = false) Daft Punk - Homework" onclick="DZ.player.playAlbum(301775, false, displayTrackList); return false;" class="btn btn-inverse" type="button"/><br/>
+					DZ.player.playAlbum(301775, false);<br/>
+					<input value="Play 3rd track of 'Daft Punk - Homework'" onclick="DZ.player.playAlbum(301775, 2, displayTrackList); return false;" class="btn btn-inverse" type="button"/><br/>
+					DZ.player.playAlbum(301775, 2);<br/>
+					<input value="Play 3rd track of 'Daft Punk - Homework' and start at offset = 50" onclick="DZ.player.playAlbum(301775, 2, 50, displayTrackList); return false;" class="btn btn-inverse" type="button"/><br/>
+					DZ.player.playAlbum(301775, 2, 50);<br/>
+					<input value="Load (autoplay = fase) 3rd track of 'Daft Punk - Homework' and start at offset = 50" onclick="DZ.player.playAlbum(301775, 2, false, 50, displayTrackList); return false;" class="btn btn-inverse" type="button"/><br/>
+					DZ.player.playAlbum(301775, 2, false, 50);<br/>
+					<br/><br/>
+
+					Except for the first one,
+					you can call theses methods with the following arguments regardless the order of the arguments : <br/>
+					index, offset, autoplay, callback<br/>
+					<br/>
+					Notice that only 'index' and 'offset' have to keep the following order : index, offset<br/>
+					For example, you can call :<br/>
+					autoplay, index, callback, offset<br/>
+					but not : <br/>
+					autoplay, offset, callback, index<br/>
+					(for this one, the offset will be interpreted as an index, and the index as an offset)
+
+
+					<br/><br/><br/>
+
+
+					<div class="alert alert-error">
+						When calling theses methods with bad parameter or track_id (album_id, etc..) that doesn't exist, your callback will have the following argument : <br/>
+						<pre>data = {
+							error : "error message"
+						}</pre>
+					</div>
+
+					<p>
+						You have access to a new method : DZ.player.isPlaying()
+					</p>
+
+					<input class="btn" type="button" onclick="DZ.player.play(); return false;" value="play"/>
+					<input class="btn" type="button" onclick="DZ.player.pause(); return false;" value="pause"/>
+					<input class="btn" type="button" onclick="DZ.player.prev(); return false;" value="prev"/>
+					<input class="btn" type="button" onclick="DZ.player.next(); return false;" value="next"/>
+					<br/><br/>
+					<input class="btn" type="button" onclick="DZ.player.setVolume(20); return false;" value="set Volume 20"/>
+					<input class="btn" type="button" onclick="DZ.player.setVolume(80); return false;" value="set Volume 80"/>
+					<br/><br/>
+					<input id="btn_shuffle" class="btn" type="button" onclick="DZ.player.setShuffle(!$(this).hasClass('active')); return false;" value="shuffle" data-toggle="button"/>
+					<input id="btn_repeat" class="btn" type="button" onclick="setRepeat(this); return false;" repeat-value='0' value="repeat"/>
+
+					<br/><br/><br/>
+				</div>
+				<div id="slider_seek" class="progressbarplay" style="">
+					<div class="bar" style="width: 0%;"></div>
+				</div>
+
+				<p>
+					You can change the track order : <br/>
+					<a href="#" onclick="inverseTrackOrder();return false;">Inverse the track order</a>
+				</p>
+
+
+
+				<table id="track_list" class="table table-hover table-condensed">
+
+				</table>
+
+				event_listener : <br/>
+				<a href="#" onclick="pre_clear();return false;">clear</a>
+				<pre id="events_list"></pre>
+
+			</div>
+		</div>
+	</div> <!-- /container -->
+		<!-- Le javascript
+		================================================== -->
+		<!-- Placed at the end of the document so the pages load faster -->
+		<script type="text/javascript">
+
+		document.addEventListener('deviceready', function(){
+			DZ.init({
+				appId  : '100006',
+				channelUrl : 'http://developers.deezer.com/examples/channel.php',
+				player : {
+					onload : function() {
+						console.log("DZ.init player.onload", arguments);
+					}
+				}
+			});
+		}, false);
+
+		DZ.ready(function() {
+			console.log("DZ.ready", arguments);
+		});
+		</script>
+	</body>
+	</html>

@@ -26,14 +26,16 @@ cordova = {
 
 		playerControl : function(args, onSuccess) {
 			console.log("cordovaCORE", args);
-			onSuccess([{
-				id : "3224234",
-				title : "TEST title",
-				artist : {
-					id : 3224234,
-					name : "okokok"
-				}
-			}]);
+			onSuccess({
+				data : [{
+					id : "3224234",
+					title : "TEST title",
+					artist : {
+						id : 3224234,
+						name : "okokok"
+					}
+				}]
+			});
 		}
 
 	}
