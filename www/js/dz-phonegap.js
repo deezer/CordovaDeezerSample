@@ -35,20 +35,34 @@ DZ.init = function(options) {
 DZ.player.loadPlayer = function() {
 	DZ.player.attachEvents();
 
-	DZ.Event.resolve(DZ.Event.SDK_READY, {
-		token : {
-			accessToken : DZ.token,
-			expire : DZ.tokenExpire
-		},
-		player : {
-			current_track : null,
-			volume : 100,
-			muted : false,
-			playing : false,
-			repeat : 0,
-			shuffle : false
-		}
+	DZ.Event.subscribe(DZ.Event.player.LOADED, function(args, evt){
+
+		DZ.Event.resolve(DZ.Event.SDK_READY, {
+			token : {
+				accessToken : DZ.token,
+				expire : DZ.tokenExpire
+			},
+			player : args
+		});
+
 	});
+
+
+	// playerOptions :
+	var player_options = {
+		volume : 50,
+		shuffle : false,
+		repeat: 0,
+		muted : false,
+		playing : false
+	};
+
+	var load_options = {
+		player : player_options,
+		user : null
+	};
+
+	DZ.onDeezerLoaded(load_options);
 };
 
 
@@ -118,6 +132,28 @@ DZ.communication.init = function() {
 	DZ.communication.initialized = true;
 }
 
-DZ.communication.send = function() {
+DZ.communication.send = function(framePath, method, args, domain) {
+	var message = {
+		method : method, args : args
+	};
 
+	if (message.method.substr(0,20) == "DZ.player_controler.") {
+		method = message.method.substr(20);
+		return deezercordova.player_controler.callMethod(method, args);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
